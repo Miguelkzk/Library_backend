@@ -4,6 +4,8 @@ class CreateClients < ActiveRecord::Migration[7.0]
       t.string :card_id
       t.string :name
       t.string :lastname
+      t.string :email
+      t.string :phone
 
       t.timestamps
     end

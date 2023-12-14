@@ -10,20 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_25_002722) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_14_135526) do
   create_table "book_copies", force: :cascade do |t|
     t.integer "id_copy"
     t.integer "status"
-    t.integer "book_rental_id"
     t.integer "book_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "book_copy_rentals", force: :cascade do |t|
+    t.integer "book_copy_id"
+    t.integer "book_rental_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_copy_id"], name: "index_book_copy_rentals_on_book_copy_id"
+    t.index ["book_rental_id"], name: "index_book_copy_rentals_on_book_rental_id"
   end
 
   create_table "book_rentals", force: :cascade do |t|
     t.datetime "rented_at"
     t.datetime "expire_at"
     t.integer "client_id"
+    t.integer "status_rented"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -40,6 +49,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_002722) do
     t.string "card_id"
     t.string "name"
     t.string "lastname"
+    t.string "email"
+    t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,4 +62,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_002722) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "book_copy_rentals", "book_copies"
+  add_foreign_key "book_copy_rentals", "book_rentals"
 end
