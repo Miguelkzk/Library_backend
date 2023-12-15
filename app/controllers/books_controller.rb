@@ -2,8 +2,7 @@ class BooksController < ApplicationController
   before_action :set_book, only: %i[show update destroy]
 
   def index
-    @books = Book.all
-    render json: @books
+    render json: Book.all
   end
 
   def show
@@ -11,11 +10,11 @@ class BooksController < ApplicationController
   end
 
   def create
-    book=Book.new(book_params)
+    book = Book.new(book_params)
     if book.save
       render json: book
     else
-      render json: book.errors, status: :unprocessable_entity
+      render json: book.errors.details, status: :unprocessable_entity
     end
   end
 
@@ -28,7 +27,11 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    @book.destroy
+    if @book.destroy
+      render json: @book
+    else
+      render json: @book.errors.details, status: :unprocessable_entity
+    end
   end
 
   private
