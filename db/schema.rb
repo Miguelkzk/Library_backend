@@ -13,19 +13,18 @@
 ActiveRecord::Schema[7.0].define(version: 2023_12_14_135526) do
   create_table "book_copies", force: :cascade do |t|
     t.integer "id_copy"
-    t.integer "status"
     t.integer "book_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "book_copy_rentals", force: :cascade do |t|
+  create_table "book_copies_rentals", force: :cascade do |t|
     t.integer "book_copy_id"
     t.integer "book_rental_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["book_copy_id"], name: "index_book_copy_rentals_on_book_copy_id"
-    t.index ["book_rental_id"], name: "index_book_copy_rentals_on_book_rental_id"
+    t.index ["book_copy_id"], name: "index_book_copies_rentals_on_book_copy_id"
+    t.index ["book_rental_id"], name: "index_book_copies_rentals_on_book_rental_id"
   end
 
   create_table "book_rentals", force: :cascade do |t|
@@ -62,6 +61,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_14_135526) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "book_copy_rentals", "book_copies"
-  add_foreign_key "book_copy_rentals", "book_rentals"
 end

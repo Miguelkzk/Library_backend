@@ -10,8 +10,7 @@ class BookcopiesController < ApplicationController
   end
 
   def index
-    @copies = BookCopy.all
-    render json: @copies
+    render json: BookCopy.all
   end
 
   def show

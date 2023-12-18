@@ -1,24 +1,22 @@
 class BookRental < ApplicationRecord
   belongs_to :client, optional:true
-  has_many :book_copy_rentals
-  has_many :book_copies, through: :book_copy_rentals
-
+  has_and_belongs_to_many :book_copies
+  validates :book_copies, presence: true
+  validate :check_book_copies_status, on: :create
   enum status_rented: {
     completed: 0,
     active: 1
   }
+  after_initialize :initialize_status
 
-  after_update :check_bookcopy_status
+  def check_book_copies_status
+    ids = BookCopy.where(id: book_copy_ids).joins(:book_rentals)
+                  .where(book_rentals: { status_rented: :active }).pluck(:id)
 
-  def check_bookcopy_status
-    if status_rented == "completed"
-      book_copies.update_all(status: :free)
-    end
+    errors.add(:base, 'Rented book found', ids:) if ids.any?
   end
 
-  def change_bookcopy_status
-    book_copies.each do |book_copy|
-      book_copy.update(status: :rented)
-    end
+  def initialize_status
+    self.status_rented ||= :active
   end
 end
