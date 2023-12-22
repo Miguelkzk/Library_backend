@@ -3,7 +3,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  resources :users, :books, :bookcopies, :bookrentals do
+  resources :users, :books do
+    member do
+      get 'show_copies', to: 'books#show_copies'
+    end 
+end
+
+  resources :bookcopies, :bookrentals do
     member do
       get 'book_copies', to: 'bookrentals#book_copies'
       post 'associate_copies', to: 'bookrentals#associate_copies'

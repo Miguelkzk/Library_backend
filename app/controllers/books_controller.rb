@@ -1,5 +1,5 @@
-class BooksController < ApplicationController 
-  before_action :set_book, only: %i[show update destroy]
+class BooksController < ApplicationController
+  before_action :set_book, only: %i[show update destroy show_copies]
 
   def index
     render json: Book.all
@@ -32,6 +32,22 @@ class BooksController < ApplicationController
     else
       render json: @book.errors.details, status: :unprocessable_entity
     end
+  end
+
+  def show_copies
+    book_copies_data = @book.book_copies
+                            .left_joins(:book_rentals)
+                            .select('book_copies.*, book_rentals.status_rented AS copy_status')
+                            .to_a
+    book_copies_data.each do |element|
+      element['copy_status'] ||= 'free'
+        if element['copy_status'] == 1
+          element['copy_status'] = 'rented'
+       else
+          element['copy_status'] = 'free'
+       end
+    end
+    render json:  book_copies_data
   end
 
   private
