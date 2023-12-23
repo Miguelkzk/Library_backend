@@ -35,6 +35,8 @@ class BooksController < ApplicationController
   end
 
   def show_copies
+    free=0
+    rented=0
     book_copies_data = @book.book_copies
                             .left_joins(:book_rentals)
                             .select('book_copies.*, book_rentals.status_rented AS copy_status')
@@ -42,14 +44,21 @@ class BooksController < ApplicationController
     book_copies_data.each do |element|
       element['copy_status'] ||= 'free'
         if element['copy_status'] == 1
-          element['copy_status'] = 'rented'
+          element['copy_status'] = 'Rented'
+          rented += 1
        else
-          element['copy_status'] = 'free'
+          element['copy_status'] = 'Free'
+          free += 1
        end
     end
-    render json:  book_copies_data
-  end
 
+    response_data = {
+      book_copies: book_copies_data,
+      free: free,
+      rented: rented
+    }
+    render json: response_data
+  end
   private
 
   def set_book
