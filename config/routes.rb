@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     end 
 end
 
-  resources :bookcopies, :bookrentals do
+  resources :bookcopies,:clients, :bookrentals do
     member do
       get 'book_copies', to: 'bookrentals#book_copies'
       post 'associate_copies', to: 'bookrentals#associate_copies'
