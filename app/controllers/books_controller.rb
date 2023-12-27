@@ -59,6 +59,18 @@ class BooksController < ApplicationController
     }
     render json: response_data
   end
+
+  def search_books
+    title = params[:title]
+    author = params[:author]
+    query=Book.all
+    query = query.where("title LIKE ?", "%#{title}%") if title.present?
+    query = query.where("author LIKE ?", "%#{author}%") if author.present?
+    results = query.all
+
+    # Devolver resultados
+    render json: results
+  end
   private
 
   def set_book

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   resources :users, :books do
     member do
+      get 'search_books', to: 'books#search_books'
       get 'show_copies', to: 'books#show_copies'
     end 
 end
