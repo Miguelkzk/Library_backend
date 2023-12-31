@@ -28,6 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_14_135526) do
   end
 
   create_table "book_rentals", force: :cascade do |t|
+    t.integer "rent_id"
     t.datetime "rented_at"
     t.datetime "expire_at"
     t.integer "client_id"

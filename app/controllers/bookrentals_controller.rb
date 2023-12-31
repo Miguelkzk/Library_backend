@@ -1,5 +1,5 @@
 class BookrentalsController < ApplicationController
-  before_action :set_rental, only: %i[show update destroy book_copies associate_copies]
+  before_action :set_rental, only: %i[show update destroy info_rental associate_copies]
 
   # mandar todo esto dentro del modelo book rental
   def create
@@ -12,7 +12,7 @@ class BookrentalsController < ApplicationController
   end
 
   def index
-    render json: Book.all
+    render json: BookRental.all
   end
 
   def show
@@ -35,8 +35,16 @@ class BookrentalsController < ApplicationController
     end
   end
 
-  def book_copies
-    render json: @rental.book_copies
+  def info_rental
+    copy_info = @rental.book_copies.left_joins(:book).select('id_copy, title')
+    client_info= @rental.client
+
+    response_data = {
+      info_book: copy_info,
+      info_client: client_info
+    }
+
+    render json: response_data
   end
 
   private
@@ -46,6 +54,6 @@ class BookrentalsController < ApplicationController
   end
 
   def rental_params
-    params.require(:book_rental).permit(:rented_at, :expire_at, :client_id, :status_rented, book_copy_ids: [])
+    params.require(:book_rental).permit(:rented_at, :rent_id, :expire_at, :client_id, :status_rented, book_copy_ids: [])
   end
 end

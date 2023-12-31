@@ -8,9 +8,9 @@
 
 book = Book.create!(title: 'Cálculo Multivariable', author: 'James Stewart', price_per_day: 200)
 book_copies = book.book_copies.create!([{ id_copy: 10 }, { id_copy: 11 }, { id_copy: 12 }])
-client= Client.create!(name: 'Beto', lastname: 'alberto')
+client= Client.create!(card_id: '44124423', name: 'Miguel', lastname: 'Kruzliak', email:'topo.manco@gmail.com', phone: '2613615007')
 rental=BookRental.create!(rented_at: Time.now.yesterday,
-                          expire_at: Time.now.tomorrow, client:, book_copies:, status_rented: :active)
+                          expire_at: Time.now.tomorrow, client:, book_copies:, status_rented: :active, rent_id: 1212)
 # Libro 2
 book2 = Book.create!(title: 'Introducción a la Programación', author: 'John Doe', price_per_day: 150)
 book2.book_copies.create!([{ id_copy: 4 }, { id_copy: 5 }, { id_copy: 6 }])
