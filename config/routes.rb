@@ -16,4 +16,11 @@ end
       post 'associate_copies', to: 'bookrentals#associate_copies'
     end
   end
+  
+  resources :clients do
+    member do
+      get 'search_client', to: 'clients#search_client'
+    end
+  end
+
 end

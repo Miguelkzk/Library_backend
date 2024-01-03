@@ -32,7 +32,13 @@ class ClientsController < ApplicationController
       render json: @client.errors, status: :unprocessable_entity
     end
   end
-
+  def search_client
+    filter = params[:card_id]
+    query=Client.all
+    query=query.where("card_id LIKE ?","%#{filter}%") if filter.present?
+    results = query.all
+    render json: results
+  end
   private
 
   def set_client
