@@ -33,12 +33,21 @@ class ClientsController < ApplicationController
     end
   end
   def search_client
-    filter = params[:card_id]
-    query=Client.all
-    query=query.where("card_id LIKE ?","%#{filter}%") if filter.present?
-    results = query.all
-    render json: results
+    card_id = params[:card_id]
+
+    if card_id.present?
+      client = Client.find_by(card_id: card_id)
+
+      if client.present?
+        render json: client
+      else
+        render json: nil, status: :ok
+      end
+    else
+      render json: nil, status: :ok
+    end
   end
+
   private
 
   def set_client
