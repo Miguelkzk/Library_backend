@@ -1,7 +1,7 @@
 class BookRental < ApplicationRecord
   belongs_to :client, optional:true
   has_and_belongs_to_many :book_copies
-  validates :book_copies, presence: true
+  validates :book_copies, :client_id, presence: true
   validate :check_book_copies_status, on: :create
   enum status_rented: {
     completed: 0,
