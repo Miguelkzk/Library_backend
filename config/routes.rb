@@ -14,6 +14,7 @@ end
     member do
       get 'info_rental', to: 'bookrentals#info_rental'
       post 'associate_copies', to: 'bookrentals#associate_copies'
+      get 'search_rental', to: 'bookrentals#search_rental'
     end
   end
   

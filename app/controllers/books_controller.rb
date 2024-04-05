@@ -35,27 +35,15 @@ class BooksController < ApplicationController
   end
 
   def show_copies
-    free=0
-    rented=0
-    book_copies_data = @book.book_copies
-                            .left_joins(:book_rentals)
-                            .select('book_copies.*, book_rentals.status_rented AS copy_status')
-                            .to_a
-    book_copies_data.each do |element|
-      element['copy_status'] ||= 'free'
-        if element['copy_status'] == 1
-          element['copy_status'] = 'Rented'
-          rented += 1
-       else
-          element['copy_status'] = 'Free'
-          free += 1
-       end
-    end
-
     response_data = {
-      book_copies: book_copies_data,
-      free: free,
-      rented: rented
+      book_copies: @book.book_copies.map do |book_copy|
+        status = book_copy.book_rentals.any? { |rental| rental.status_rented == 'active' } ? 'rented' : 'free'
+        {
+          id: book_copy.id,
+          id_copy: book_copy.id_copy,
+          status: status
+        }
+      end
     }
     render json: response_data
   end

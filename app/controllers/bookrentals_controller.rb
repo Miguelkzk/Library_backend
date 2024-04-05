@@ -35,8 +35,14 @@ class BookrentalsController < ApplicationController
     end
   end
 
+  def search_rental
+    rent_id = params[:rent_id]
+    rental = BookRental.find_by(rent_id: rent_id)
+    render json: rental
+  end
+
   def info_rental
-    copy_info = @rental.book_copies.left_joins(:book).select('id_copy, title')
+    copy_info = @rental.book_copies.left_joins(:book).select('id_copy, title, price_per_day')
     client_info= @rental.client
 
     response_data = {
