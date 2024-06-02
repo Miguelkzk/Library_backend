@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_14_135526) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_05_185748) do
   create_table "book_copies", force: :cascade do |t|
     t.integer "id_copy"
     t.integer "book_id"
@@ -56,8 +56,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_14_135526) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "name"
     t.string "username"
-    t.string "password"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

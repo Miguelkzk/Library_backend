@@ -67,6 +67,8 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     amazing_print (1.5.0)
+    base64 (0.2.0)
+    bcrypt (3.1.20)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -86,6 +88,8 @@ GEM
     irb (1.9.1)
       rdoc
       reline (>= 0.3.8)
+    jwt (2.8.1)
+      base64
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -170,9 +174,11 @@ PLATFORMS
 
 DEPENDENCIES
   amazing_print
+  bcrypt
   bootsnap
   byebug
   debug
+  jwt
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.8)

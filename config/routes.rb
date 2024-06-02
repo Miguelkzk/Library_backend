@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # Rutas de autenticación
+  post 'register', to: 'authentication#register'
+  post 'login', to: 'authentication#login'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
   resources :users, :books do
     member do
       get 'search_books', to: 'books#search_books'
       get 'show_copies', to: 'books#show_copies'
     end 
-end
+  end
 
   resources :bookcopies, :clients, :bookrentals do
     member do
@@ -23,5 +23,4 @@ end
       get 'search_client', to: 'clients#search_client'
     end
   end
-
 end

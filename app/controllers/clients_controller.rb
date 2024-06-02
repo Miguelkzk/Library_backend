@@ -1,5 +1,7 @@
 class ClientsController < ApplicationController
   before_action :set_client, only: %i[show update destroy]
+  #before_action :authenticate_request!
+
   def index
     render json: Client.all
   end

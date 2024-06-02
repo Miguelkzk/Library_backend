@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     if user.save
       render json: user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: user.errors.details, status: :unprocessable_entity
     end
   end
 
@@ -29,17 +29,13 @@ class UsersController < ApplicationController
     if @user.destroy
       render json: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user.errors.details, status: :unprocessable_entity
     end
   end
-
-  private
-
   def set_user
     @user = User.find(params[:id])
   end
-
   def user_params
-    params.permit(:username, :password)
+    params.permit(:name, :username, :password)
   end
 end

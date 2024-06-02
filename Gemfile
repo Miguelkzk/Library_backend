@@ -48,4 +48,6 @@ group :development do
 end
 
 gem 'amazing_print'
+gem 'jwt'
+gem 'bcrypt'
 gem 'rack-cors', require: 'rack/cors'

@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[show update destroy show_copies]
-
+  #before_action :authenticate_request!
   def index
     render json: Book.all
   end
