@@ -4,5 +4,6 @@
 * Ruby version 3.3.2
 ### Comandos
 * Bundle install
+* rails db:create 
 * rails db:migrate db:seed
 * rails s
